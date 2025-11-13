@@ -108,13 +108,13 @@ spec:
 
 ```yaml
 apiVersion: v1
-kind: Secret
+kind: ConfigMap
 metadata:
-  name: mysql-secret  # Tên của Secret
-type: Opaque  # Loại Secret
+  name: wordpress-config # Tên của ConfigMap
 data:
-  mysql-root-password: MTIz     # "password"
-  mysql-user-password: MTIz     # "password"
+  WORDPRESS_DB_HOST: mysql # Địa chỉ host của MySQL
+  WORDPRESS_DB_NAME: wordpress # Cơ sở dữ liệu WordPress
+  WORDPRESS_DB_USER: wpuser # Tên người dùng WordPress
 ```
 ## 5. `wordpress-service.yaml`
 
