@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql # Tên service là mysql từ đặt
+spec:
+  selector:
+    app: mysql # Chọn lable có tên mysql
+  ports:
+    - port: 3306 #Port này do mình mở có thể để tùy chỉnh
+      targetPort: 3306 # Port này là nơi mặc định của MySQL trên Dockerhub
+  clusterIP: None  # Headless service để DNS nội bộ hoạt động ổn định
