@@ -85,4 +85,102 @@ git push -f origin main   # push force vì đã thay đổi lịch sử commit
 2. Nhấn **Compare & pull request**.
 3. Kiểm tra thay đổi và nhấn **Create Pull Request**.
 
+----
+Giải pháp ChatGPT để không mất file README.md khi reset
+
+# Quy Trình Backup – Reset – Restore Để Tạo Pull Request Đúng Chuẩn
+
+Khi làm việc với Git, đặc biệt trong trường hợp cần đồng bộ lại lịch sử commit giữa **fork** và **repo gốc**, bạn sẽ phải chạy:
+
+```
+git reset --hard upstream/main
+```
+
+Lệnh này sẽ đưa repo của bạn về đúng trạng thái của repo gốc, bao gồm:
+
+* Xóa toàn bộ file của bạn trong thư mục
+* Thay thế bằng toàn bộ file từ repo gốc
+* Ghi đè README.md của bạn bằng README.md gốc
+
+Đây là hành vi **bình thường** và **bắt buộc** để tạo PR đúng chuẩn.
+Tuy nhiên, bạn vẫn muốn giữ lại toàn bộ code của mình — đặc biệt là file README.md đã tự viết.
+Vì vậy, bạn cần **backup trước khi reset**.
+
+---
+
+## 🔥 Quy Trình Đúng Chuẩn
+
+### 1️⃣ Backup toàn bộ code trước khi reset
+
+```bash
+mkdir ~/backup_l7
+cp -r /home/ubuntu/homework/l7/* ~/backup_l7/
+```
+
+Tiếp theo, bạn tiến hành reset repo:
+
+```bash
+git reset --hard upstream/main
+```
+
+Sau lệnh này:
+
+* README.md gốc sẽ xuất hiện lại
+* File của bạn biến mất (tạm thời)
+* Lịch sử commit đã đồng bộ với repo gốc
+
+---
+
+### 2️⃣ Khôi phục code của bạn sau khi reset
+
+Copy toàn bộ file từ bản backup vào lại thư mục dự án:
+
+```bash
+cp -r ~/backup_l7/* /home/ubuntu/homework/l7/
+```
+
+Lúc này:
+
+* Toàn bộ code của bạn được khôi phục
+* README.md của bạn cũng trở lại
+* Lịch sử commit vẫn giữ nguyên theo repo gốc → sẵn sàng tạo PR
+
+---
+
+### 3️⃣ Commit và push code lên repo fork của bạn
+
+```bash
+git add .
+git commit -m "Add WordPress & MySQL Kubernetes manifests"
+git push -f origin main
+```
+
+Vì lịch sử commit đã thay đổi nên cần dùng:
+
+```
+-f  (force push)
+```
+
+---
+
+## 🎉 Kết quả
+
+* README.md của bạn **không bị mất**
+* README.md của bạn **xuất hiện trong Pull Request**
+* Repo gốc sẽ nhận được README.md **phiên bản do bạn viết**
+* Bạn đã đồng bộ lịch sử commit đúng chuẩn, PR sẽ tạo được mà không lỗi
+
+---
+
+## 📝 Tóm tắt quy trình
+
+| Bước                   | Mục đích                                     |
+| ---------------------- | -------------------------------------------- |
+| Backup code            | Giữ lại toàn bộ file của bạn trước khi reset |
+| Reset về upstream/main | Đồng bộ lịch sử commit để GitHub tạo PR      |
+| Restore code           | Đưa code của bạn trở lại thư mục dự án       |
+| Commit & push          | Đẩy code lên repo fork để tạo PR             |
+| Tạo Pull Request       | Gửi thay đổi về repo gốc                     |
+
+---
 
