@@ -85,11 +85,4 @@ git push -f origin main   # push force vì đã thay đổi lịch sử commit
 2. Nhấn **Compare & pull request**.
 3. Kiểm tra thay đổi và nhấn **Create Pull Request**.
 
----
 
-```
-
----
-
-Nếu bạn muốn, tôi có thể tạo file `.md` để bạn tải về luôn.
-```
