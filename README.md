@@ -157,7 +157,7 @@ spec:
               key: mysql-user-password
 
 ```
-Chay command
+Chạy command
 ```sh
 kubectl apply -f mysql-secret.yaml
 kubectl apply -f mysql-service.yaml
